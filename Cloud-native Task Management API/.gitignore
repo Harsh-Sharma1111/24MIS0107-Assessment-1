@@ -1,0 +1,19 @@
+# Python / Flask
+venv/
+__pycache__/
+*.pyc
+instance/
+
+# Node / React
+node_modules/
+dist/
+build/
+
+# Environment Variables
+.env
+*.pem
+
+# IDEs / OS
+.vscode/
+.idea/
+.DS_Store
