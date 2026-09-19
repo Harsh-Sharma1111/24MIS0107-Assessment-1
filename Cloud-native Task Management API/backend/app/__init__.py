@@ -13,7 +13,7 @@ def create_app(config_class):
     
     # If a string like 'development' is passed, resolve it to the config class
     if isinstance(config_class, str):
-        from backend.config import config_by_name
+        from config import config_by_name
         config_class = config_by_name.get(config_class, config_by_name['dev'])
         
     app.config.from_object(config_class)
