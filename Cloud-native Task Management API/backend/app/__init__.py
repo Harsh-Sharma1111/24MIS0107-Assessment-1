@@ -19,6 +19,9 @@ def create_app(config_class):
         config_class = config_by_name.get(config_class, config_by_name['dev'])
         
     app.config.from_object(config_class)
+    
+    # Disable strict slashes to prevent 308 redirects on API routes (fixes CORS preflight issues)
+    app.url_map.strict_slashes = False
 
     # Initialize extensions with the app
     db.init_app(app)

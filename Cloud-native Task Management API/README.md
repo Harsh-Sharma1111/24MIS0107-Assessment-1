@@ -57,6 +57,18 @@ It is designed to easily transition from a local development environment (using 
   - Enforced SSL connections natively (`require_secure_transport`).
   - Implemented SQL connection pooling optimizations (`pool_pre_ping=True`, `pool_recycle=280`) to actively prevent stale connections and "MySQL server has gone away" timeouts typical of AWS RDS.
 
+### ✅ Phase 5: Frontend React SPA (Single Page Application)
+- **Modern Scaffolding**: Initialized a blazing-fast React environment utilizing **Vite** and styled completely with the modern **Tailwind CSS v4** engine.
+- **Axios API Client**: Built a dedicated API layer (`client.js`, `tasksApi.js`, etc.) utilizing Axios interceptors to automatically parse environment variables (`VITE_API_BASE_URL`) and securely attach JWTs to outgoing requests from `localStorage`.
+- **Authentication & Security (`AuthContext`)**: 
+  - Implemented a React Context API wrapper to globally manage the `user` and `token` state.
+  - Built a `ProtectedRoute` component wrapping React Router to intercept unauthorized visits and redirect to a polished Login screen while preserving intended navigation state.
+- **Interactive Kanban Board**: 
+  - Utilized `@hello-pangea/dnd` to create a 3-column drag-and-drop Sprint board.
+  - Engineered **Optimistic UI updates** for card dragging—instantly updating the frontend while silently handling `PUT` requests to the API, complete with gracefully rolling back the UI and firing `react-hot-toast` error notifications if the backend request fails.
+- **Task Management Modal**: Created an overlay modal handling both Task Creation and Editing, auto-populating Sprint and Assignee dropdowns, and allowing Task Deletion (with confirmation).
+- **Data Visualization**: Integrated **Recharts** to display a horizontal, color-coded, live-updating progress chart summarizing the currently selected Sprint's completion status.
+
 ---
 
 ## 🛠️ Comprehensive Local Development Setup
@@ -122,12 +134,21 @@ python seed.py
 - `alice@example.com` (Role: Member)
 - `bob@example.com` (Role: Member)
 
-### 7. Run the Development Server
+### 7. Run the Development Server (Backend)
 Start the Flask application:
 ```bash
 python run.py
 ```
 The API will be available at `http://localhost:5000/`.
+
+### 8. Run the Frontend React Application
+Open a **new terminal window**, navigate to the `frontend/` directory, install the Node dependencies, and start Vite:
+```bash
+cd frontend
+npm install
+npm run dev
+```
+The React application will be available at `http://localhost:5173/`.
 
 ---
 
