@@ -15,6 +15,9 @@ class User(db.Model):
     # Relationships
     tasks = db.relationship('Task', backref='assignee', lazy=True)
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -35,6 +38,9 @@ class Sprint(db.Model):
 
     # Relationships
     tasks = db.relationship('Task', backref='sprint', lazy=True)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     def to_dict(self):
         return {
@@ -64,6 +70,9 @@ class Task(db.Model):
         db.Index('idx_task_sprint_id', 'sprint_id'),
         db.Index('idx_task_assignee_id', 'assignee_id'),
     )
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
     def to_dict(self):
         return {
