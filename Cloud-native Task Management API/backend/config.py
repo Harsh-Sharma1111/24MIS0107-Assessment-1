@@ -30,7 +30,24 @@ class ProductionConfig(Config):
     """Production configuration."""
     DEBUG = False
     TESTING = False
-    SQLALCHEMY_DATABASE_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
+    
+    DB_USER = os.environ.get('DB_USER', 'root')
+    DB_PASSWORD = os.environ.get('DB_PASSWORD', '')
+    DB_HOST = os.environ.get('DB_HOST', 'localhost')
+    DB_PORT = os.environ.get('DB_PORT', '3306')
+    DB_NAME = os.environ.get('DB_NAME', 'taskdb_prod')
+    
+    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+    
+    SQLALCHEMY_ENGINE_OPTIONS = {
+        'pool_pre_ping': True,
+        'pool_recycle': 280,
+        'connect_args': {
+            'ssl': {
+                'require_secure_transport': True
+            }
+        }
+    }
 
 config_by_name = {
     'dev': DevelopmentConfig,

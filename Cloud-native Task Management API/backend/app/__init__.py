@@ -2,10 +2,12 @@ from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_cors import CORS
+from flask_migrate import Migrate
 
 # Initialize extensions globally
 db = SQLAlchemy()
 ma = Marshmallow()
+migrate = Migrate()
 
 def create_app(config_class):
     """Application factory for Flask."""
@@ -21,7 +23,11 @@ def create_app(config_class):
     # Initialize extensions with the app
     db.init_app(app)
     ma.init_app(app)
+    migrate.init_app(app, db)
     
+    # Import models so Flask-Migrate can auto-detect them for migrations
+    from . import models
+
     # Configure CORS to allow all origins on /api/* for now
     CORS(app, resources={r"/api/*": {"origins": "*"}})
 
